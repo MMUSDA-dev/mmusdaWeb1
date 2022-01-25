@@ -1,0 +1,159 @@
+{% include './cn/head.html' %} 
+
+<body>
+{% load static %}
+    {% include './cn/header.html' %}
+
+    <!-- Page Content -->
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h1 class="page-header">Our Church Services
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'sda:index' %}">Home</a>
+                    </li>
+                    <li class="active">Services</li>
+                </ol>
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+
+            <div class="col-lg-5 col-md-6 col-sm-6">
+                <img class="img-responsive img-other" src="{% static 'sda/img/d9.jpg' %}">
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <!-- Service Paragraphs -->
+
+        <div class="row">
+
+            <div class="col-md-8">
+                <h2 class="page-header">Our Services</h2>
+                <p>Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            </div>
+
+            <div class="col-md-4">
+                <h2 class="page-header">Scripture <small>From: Mokandu Brian</small></h2>
+                <strong class="float-left">Book:34:105</strong>
+                <p>Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes nemo minima rerums unsers sadips amets.</p>
+                <a class="btn btn-primary" href="#">Click Me!</a>
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <!-- Service Tabs -->
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h2 class="page-header">Weekly View</h2>
+                <ul id="myNavPills" class="nav nav-pills">
+                    <li class="active"><a href="#Monday" data-toggle="tab">Monday</a>
+                    </li>
+                    <li><a href="#Teusday" data-toggle="pill">Tuesday</a>
+                    </li>
+                    <li><a href="#Wednesday" data-toggle="pill">Wednesday</a>
+                    </li>
+                    <li><a href="#Thursday" data-toggle="pill">Thursday</a>
+                    </li>
+                    <li><a href="#Friday" data-toggle="pill">Friday</a>
+                    </li>
+                    <li><a href="#Saturday" data-toggle="pill">Saturday</a>
+                    </li>
+                    <li><a href="#Sunday" data-toggle="pill">Sunday</a>
+                    </li>
+                </ul>
+
+                <div id="myTabContent" class="tab-content">
+                    {% if morning %}
+                    {% for day in morning %}
+                    <div class="tab-pane fade in active tab-pad" id="{{day.day}}">
+                      {% if morn %}
+                        <div class="row">
+                           
+                            {% for time in morn %}
+                            {% if day.day == time.day %}
+                        
+                            <div class="col-sm-6">
+                                <table class = "table table-borderless">
+                                    <h3><small>
+                                            <tr>
+                                                <td><span class="label label-danger">Title:</span></td>
+                                                <td>{{time.service_name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-default">Venue:</span></td>
+                                                <td>{{time.Venue}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-success">Time:</span></td>
+                                                <td>From {{time.Time_From}} To {{time.Time_To}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-warning">Description:</span></td>
+                                                <td></td>
+                                            </tr>
+                                        </small>
+                                    </h3>
+                                </table>
+                                <p>{{time.description | truncatechars:300}}</p>
+                            </div>
+                            {% endif %}
+                          {% endfor %}
+                          </div>
+                          {% endif %}
+                        
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                   
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <!-- Service Images -->
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h2 class="page-header">Service Showcase</h2>
+            </div>
+
+            {% if sabbath %}
+                {% for sab in sabbath%}
+                    <div class="col-sm-4">
+                        <img class="img-responsive img-other" src="{{sab.image_link.url}}">
+                        <h3>{{sab.service_name}}</h3>
+                        <p>{{sab.description}}</p>
+                        <a class="btn btn-link btn-sm pull-right">God Bless You </a>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+        
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    {% include './cn/footer.html'%}
+  
+    <!-- JavaScript -->
+   {% include './cn/tail.html' %}
+
+</body>
+
+</html>

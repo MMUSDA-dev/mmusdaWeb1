@@ -1,0 +1,155 @@
+{% include './cn/head.html' %} 
+
+<body>
+{% load static %}
+    {% include './cn/header.html' %}
+
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h1 class="page-header">Blog Post
+                    <small>A Sample Blog Post</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'sda:index' %}">Home</a>
+                    </li>
+                    <li class="active">Blog Post</li>
+                </ol>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-8">
+                {% if item %}
+                
+                    <!-- the actual blog post: title/author/date/content -->
+                    <hr>
+                    <p><i class="fa fa-clock-o"></i> Posted on {{item.publication_date}}<!--a href="#">Start Boostrap</a>-->
+                    </p>
+                    <hr>
+                    
+                     <!-- 4:3 aspect ratio -->
+                     <div class="embed-responsive embed-responsive-4by3">
+                        <iframe class="embed-responsive-item" src="{{item.sermon_link}}" allowfullscreen></iframe>
+                    </div>
+                    
+                    <hr>
+                    <p>{{item.sermon_info}}</p>
+                    <p><strong>{{item.sermon_title}}</strong>
+                    </p>
+                    {% if other %}
+                    <ul>
+                        {% for itm in other %}
+                            <li><a href = "{% url 'sda:sermon' itm.id %}">{{itm.sermon_title}}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <hr>
+             
+                {% endif %}
+
+                <!-- the comment box -->
+                <div class="well">
+                    <h4>Leave a Comment:</h4>
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <hr>
+
+                <!-- the comments -->
+                <h3>Start Bootstrap
+                    <small>9:41 PM on August 24, 2013</small>
+                </h3>
+                <p>This has to be the worst blog post I have ever read. It simply makes no sense. You start off by talking about space or something, then you randomly start babbling about cupcakes, and you end off with random fish names.</p>
+
+                <h3>Start Bootstrap
+                    <small>9:47 PM on August 24, 2013</small>
+                </h3>
+                <p>Don't listen to this guy, any blog with the categories 'dinosaurs, spaceships, fried foods, wild animals, alien abductions, business casual, robots, and fireworks' has true potential.</p>
+
+            </div>
+
+            <div class="col-lg-4">
+                <div class="well">
+                    <h4>Blog Search</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <!-- /well -->
+                <div class="well">
+                    <h4>Popular Sermons</h4>
+                    <div class="row">
+                        {% if other %}
+                       
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled">
+                                    {% for item in other %}
+                                        <li><a href="{% url 'sda:sermon' item.id %}">{{item.sermon_title}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        
+                        {% endif %}
+                        {% if itemother %}
+                       
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled">
+                                    {% for item in itemother %}
+                                        <li><a href="{% url 'sda:sermon' item.id %}">{{item.sermon_title}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- /well -->
+                <div class="well">
+                    <h4>Inline Events</h4>
+                    <div class = "row">
+                        <div class="col-md-12">
+                            {% if event %}
+                                <ul class="list-group">
+                                    {% for itm in event %}
+                                        <li class="list-group-item"><a href="{% url 'sda:item' itm.id %}">{{itm.event_name}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- /well -->
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+    {% include './cn/footer.html' %}
+   
+    {% include './cn/tail.html' %}
+    <!-- JavaScript -->
+    
+</body>
+
+</html>

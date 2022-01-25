@@ -1,0 +1,69 @@
+{% load static %}
+<nav class="navbar navbar-inverse navbar-expand-lg navbar-fixed-top"  style="height: 80px">
+    <div class="container">
+         <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+         <a class="navbar-brand" href="{% url 'sda:index' %}" >
+            <img src="{% static 'sda/img/adventist-Logo.png' %}" width="60" height="60" class="d-inline-block align-top" alt="">
+            <span>Multimedia University</span>
+        </a>
+    
+        <button class="navbar-toggler menu-toggler " style = 'background-color:transparent' type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars" style= 'color:white; font-size:large'></i>
+        </button>
+                
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <nav class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="nav navbar-nav mr-auto navbar-right">
+                <li class = "nav-item"><a href="{% url 'sda:index' %}" class = "nav-link">Home</a>
+                </li>
+                <li class = "nav-item"><a href="{%url 'sda:services'  %}" class ="nav-link" >Services</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Departments
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'sda:dept_inside_activities' %}">Internal Activities</a>
+                             <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'sda:dept_members_welfare' %}">Members Welfare</a>
+                             <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'sda:dept_church_affairs' %}">Church Affairs</a>
+                             <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'sda:dept_ministries_outreach' %}">Ministries &amp; Outreach</a>
+                      </div>
+                    
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Activities
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'sda:announcements' %}">Announcements</a>
+                             <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'sda:sermons' %}">Sermons</a>
+                             <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'sda:timeline' %}">Timeline</a>
+                          
+                      </div>                    
+                </li>
+               
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'sda:about' %}">About</a>
+                             <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'sda:contact' %}">Contact</a>
+                             
+                      </div>                    
+                </li>
+               
+                <li><a class = "nav-link" href="{% url 'mission:home' %}">Mission</a></li>
+            </ul>
+        </nav>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>

@@ -1,0 +1,189 @@
+{% include './cn/head.html' %} 
+
+<body>
+{% load static %}
+
+    {% include './cn/header.html' %}
+
+    <div class="container">
+        {% if category %}        
+        <div class="row">            
+            <div class="col-lg-12">
+                <h1 class="page-header">{{category.category_name}}:
+                    <small>{{cat.category_leader}}</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'sda:index' %}">Home</a>
+                    </li>
+                    <li class="active">Department of: {{cat.category_name}}</li>
+                </ol>
+            </div>           
+        </div>
+        <div class="row">
+            <h2 class="page-header">&nbsp;Leadership</h2>
+            <div class="col-md-11 portfolio-item">
+                <div class="row">
+                    {% if dpt_leader %} 
+                    <div class="col-sm-3">
+                        <img class="media-object img-responsive" src="{{dpt_leader.profile_picture.url}}">
+                    </div>
+                    
+                    <div class="col-sm-7">
+                        <div class="media-body">                          
+                                 <h4><em>Elder Incharge:</em>  {{category.category_leader}}</h4>                            
+                                                       
+                                <p>{{category.Word_From_The_Leader}}</p>
+                        <hr />
+                                <p><strong>Contact: {{dpt_leader.contact}}</strong><br>
+                                    <strong>Email: {{dpt_leader.user.email}}</strong></p>                     
+                            
+                        </div>
+                    </div>
+                    {% endif %}                    
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6 portfolio-item">
+                <h3>What We Do ...</h3> 
+                <div class="list-group">                    
+                    <span class="list-group-item">
+                        <p>
+                           {{category.Category_role}}
+                        </p>
+                    </span>
+                </div>
+            </div>
+            {% if dept %}
+            <div class="col-md-6 portfolio-item">
+                <h3>Our Team</h3>
+                <ul class="list-group">
+                    {% for dpt in dept %}
+                        {% if leaders %}
+                            {% for lead in leaders %}
+                                {% ifequal lead.dept_id.id dpt.id %}
+                                    <li class="list-group-item">{{lead.user_id}}</li>
+                                {% endifequal%}
+                            {% empty %}
+                                <p>No leaders assigned in this category</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% empty %}
+                        <p>There are no members in this category</p>
+                   {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        <hr>  
+        {% endif %} 
+
+        <div class="row">
+            <div class="col-lg-6">
+                {% if ann %}
+                <h2>Announcements</h2>
+                <ul class="list-group">
+                    {% for announce in ann %}
+                    <li class="list-group-item">{{announce.announcement_title}}
+                        <span class="label label-default pull-right">Date:  {{announce.announcement_due_date.date}}</span>
+                    </li>
+                    {% endfor %}
+                   
+                </ul>
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+                {% if event %}
+                <h2>Activities</h2>
+                <ul class="list-group">
+                    {% for en in event %}
+                    <li class="list-group-item">{{en.event_name}} 
+                        <span class="label label-default pull-right">Start Date:  {{en.start_date.date}}</span>
+                    </li>
+                   {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-lg-12">
+               <h2 class="page-header">Sub Departments</h2>
+               <div class="panel-group" id="accordion">
+                   {% if dept %}
+                   {% for dpt in dept %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="accordion" data-parent="#{{dpt.department_name}}" href="#{{dpt.department_name}}">{{dpt.department_name}}</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <h2 class="page-header">&nbsp;Leadership</h2>
+                                    {% if leaders%}
+                                    {% for lead in leaders %}
+                                        
+                                        {% ifequal  lead.dept_id.id dpt.id %}
+                                            <div class="col-md-6 portfolio-item">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <img class="media-object img-responsive pull-left" src="{{lead.user_id.profile_picture.url}}">
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <div class="media-body">
+                                                            <h4>{{lead.dpt_role | upper}}: {{lead.user_id}}</h4>
+                                                            <p>{{lead.Words_From_The_Leader}}</p>
+                                                            <p>
+                                                                <strong>Contact: {{lead.user_id.contact}}</strong><br>
+                                                                <strong>Email: {{lead.user_id.user.email}}</strong>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endifequal %}
+                                    {% empty %}
+                                    <div class="row">
+                                        
+                                        <div class="col-sm-8">
+                                            <div class="media-body">
+                                                <h4 class = 'red'>This department has no assigned leader</h4>
+                                               </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif%}
+                                   
+                                </div><hr>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4>What We Do ...</h4>
+                                        <p>{{dpt.department_role}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    
+                 
+                </div> 
+            </div>
+        </div>
+        </div>
+
+    </div>
+ <!-- /.container -->
+    {% include './cn/footer.html' %}
+  
+    <!-- JavaScript -->
+    {% include './cn/tail.html' %}
+</body>
+
+</html>

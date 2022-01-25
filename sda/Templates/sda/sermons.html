@@ -1,0 +1,170 @@
+{% load crispy_forms_tags %}
+{% include './cn/head.html' %} 
+
+<body>
+{% load static %}
+    {% include './cn/header.html' %}
+
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h1 class="page-header">Preachings and Teachings
+                    <small>Study Place</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'sda:index' %}">Home</a>
+                    </li>
+                    <li class="active">Preachings & Teachings</li>
+                </ol>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-8">
+                {% if sermon %}
+                {% for speach in sermon %}
+                    <small class="label label-default">Title</small>
+                    <h3>
+                        {{speach.sermon_title}}
+                    </h3>
+                    <small>By {{speach.sermon_speaker}}</small>
+                    </p>
+                    <hr>
+                    <p><i class="fa fa-clock-o"></i> Posted on {{speach.publication_date}}</p>
+                    <hr>
+                    <div class="embed-responsive">
+                        <iframe width="750" height="315" src="{{speach.sermon_link}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <!-- 16:9 aspect ratio -->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="{{speach.sermon_link}}" allowfullscreen></iframe>
+                    </div>
+                    
+                   
+                    <hr>
+                    <p style = "width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{speach.sermon_info}}</p>
+                    <a class="btn btn-primary" href="{% url 'sda:sermon' speach.id %}">Read More <i class="fa fa-angle-right"></i></a>
+
+                    <hr>
+                {% endfor %}
+                {% endif %}
+               
+                <!-- Handling the pagination for multiple posted sermons and updates -->
+                
+                    <ul class="pager">
+                        {% if sermon.has_previous %}
+                        <li class="previous"><a href="?page=1">&laquo; first</a>
+                            <a href = '?page={{sermon.previous_page_number}}'>previous</a>
+                        </li>
+                        {% endif %}
+                        <span class="current step-links">
+                            Page {{ sermon.number }} of {{ sermon.paginator.num_pages }}.
+                        </span>
+                        {% if sermon.has_next %}
+                            <li class="next">
+                                <a href = '?page={{sermon.paginator.num_pages}}'>Last</a>
+                                <a href="?page={{sermon.next_page_number}}">Next &raquo;</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                
+
+            </div>
+
+            <!-- The search form -->
+            <div class="col-lg-4">
+                <div class="well">
+                    <form role = 'form' action = /sermons/ method = 'POST'>
+                        {% csrf_token %}
+                        <h4>Search In Sermons</h4>
+                        <div class="input-group">                            
+                            {{form | crispy}}
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                    <!-- /input-group -->
+                </div>
+
+                <!-- The search data output location in the page -->
+                {% if search %}
+                <div class="well">
+                    <h4>Search Results </h4>
+                    <ul class="list-group">
+                        
+                        <ul class="list-group">
+                            {% for itm in search %}
+                                <li class="list-group-item"><a href="{% url 'sda:sermon' itm.id %}">{{itm.sermon_title}}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </ul>
+                </div>
+
+                {% endif %}
+
+                <!-- /well -->
+                <div class="well">
+                    <h4>Popular Videos</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5>Others </h5>
+                            {% if itemother %}
+                                <ul class="list-group">
+                                    {% for itm in itemother %}
+                                        <li class="list-group-item"><a href="{% url 'sda:sermon' itm.id %}">{{itm.sermon_title}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-12">
+                            {% if sermon %}
+                                <ul class="list-group">
+                                    {% for itm in sermon %}
+                                        <li class="list-group-item"><a href="{% url 'sda:sermon' itm.id %}">{{itm.sermon_title}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- /well -->
+                <div class="well">
+                    <h4>Inline Events</h4>
+                    <div class = "row">
+                        <div class="col-md-12">
+                            {% if event %}
+                                <ul class="list-group">
+                                    {% for itm in event %}
+                                        <li class="list-group-item"><a href="{% url 'sda:item' itm.id %}">{{itm.event_name}}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- /well -->
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+    {% include './cn/footer.html' %}
+   
+    {% include './cn/tail.html' %}
+    <!-- JavaScript -->
+    
+</body>
+
+</html>

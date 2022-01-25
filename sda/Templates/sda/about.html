@@ -1,0 +1,144 @@
+{% include './cn/head.html' %} 
+
+<body>
+{% load static %}
+    {% include './cn/header.html' %}
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h1 class="page-header">About Us
+                    <small>Meet Our Team</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'sda:index' %}">Home</a>
+                    </li>
+                    <li class="active">About Us</li>
+                </ol>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <img class="img-responsive" src="{% static 'sda/img/logo.png' %}">
+            </div>
+            <div class="col-md-6">
+                {% if about %}
+                    <h2>Welcome to MMU SDA Church</h2>
+                        {% for ab in about %}
+                            <p>{{ ab.content }}</p>
+                        {% endfor %}
+                {% endif %}
+            </div>
+           
+        </div>
+
+        <!-- Team Member Profiles -->
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h2 class="page-header">Meet Our Team Members</h2>
+            </div>
+            {% if leader %}
+            {% for lead in leader %}
+            <div class="col-sm-4">
+                <img class="img-responsive img-full-width img-thumbnail" src="{{lead.user_id.profile_picture.url}}">
+                <table>
+                    <thead>
+                        <tr>
+                            <td colspan="3">
+                                <h3>{{lead.user_id}}
+                                    <small>{{lead.dpt_role | upper}}  :  {{lead.dept_id}}</small>
+                                </h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p>Reach to this leader?</p></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><h5>Contact</h5></td><td><b>:</b></td>
+                            <td><a href = "call:{{lead.user_id.contact}}">{{lead.user_id.contact}}</a></td>
+                        </tr>
+                                        
+                        <tr>
+                            <td><h5>Email </h5></td><td><b>:</b></td>
+                            <td><a href="mailto:{{lead.user_id.user.email}}">{{lead.user_id.user.email}}</a></td>
+                            
+                        <tr>
+                        <tr>
+                            <td colspan="3"><p>{{lead.Words_From_The_Leader}}</p></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+            {% endif %}
+  
+        </div>
+
+        <!-- Our Customers -->
+
+        {% if family %}
+        <div class="row">
+          
+            <div class="col-lg-12">
+                <h2 class="page-header">Family heads</h2>
+            </div>
+
+            {% for fam in family %}
+
+            <div class="col-md-3 col-xs-10">
+                <div style="text-align: center;">
+                    <img class="img-responsive img-customer img-circle" width = "130px" src="{{fam.family.family_profile.url}}">
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <td><h4><em>{{fam.family | upper}}</em></h4></td>
+                        </tr>
+                        <tr>
+                            <td><p>Reach the parent</p></td>
+                        </tr>
+                        
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><h5>Contact</h5></td>
+                            <td><a href = "call:{{fam.user_id.contact}}">{{fam.user_id.contact}}</a></td>
+                        </tr>
+                                        
+                        <tr>
+                            <td><h5>Email: </h5></td>
+                            <td><a href="mailto:{{fam.user_id.user.email}}">{{fam.user_id.user.email}}</a></td>
+                            
+                        </tr>
+                        <tr>
+                            <td colspan="2"><p>{{fam.family.inspiration}}</p></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+
+    </div>
+    
+    {% include './cn/footer.html' %}
+    
+    <!-- JavaScript -->
+     {% include './cn/tail.html' %}
+    
+</body>
+
+</html>
